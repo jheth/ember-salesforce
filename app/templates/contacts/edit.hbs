@@ -1,0 +1,22 @@
+<div class="large-12 columns">
+  <div class="row">
+    <label>First Name</label>
+    {{input type="text" value=model.FirstName}}
+  </div>
+  <div class="row">
+    <label>Last Name</label>
+    {{input type="text" value=model.LastName}}
+  </div>
+  <button {{action "save" model}}>Save</button>
+
+  <h3>Created By</h3>
+  <p>{{model.CreatedBy.Name}}</p>
+  <ul class="inline-list">
+    <li>
+      {{#link-to 'contacts'}}Back{{/link-to}}
+    </li>
+    <li><a href="#" {{action "delete" model}}>Delete</a></li>
+  </ul>
+</div>
+
+{{outlet}}

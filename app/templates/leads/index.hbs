@@ -1,0 +1,30 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Title</th>
+      <th>Email</th>
+      <th>Lead Source</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each model as |lead|}}
+      <tr>
+        <td>{{lead.Name}}</td>
+        <td>{{lead.Title}}</td>
+        <td>{{lead.Email}}</td>
+        <td>{{lead.LeadSource}}</td>
+        <td>
+          {{#link-to 'leads.edit' lead}}Edit{{/link-to}}
+        </td>
+        <td><a action="delete">Delete</a></td>
+      </tr>
+      {{else}}
+        Sorry, no Leads here.
+    {{/each}}
+  </tbody>
+</table>
+
+{{outlet}}

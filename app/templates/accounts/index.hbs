@@ -1,0 +1,28 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Location</th>
+      <th>Country</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each model as |account|}}
+      <tr>
+        <td>{{account.Name}}</td>
+        <td>{{account.BillingCity}}, {{account.BillingState}} {{account.BillingPostalCode}}</td>
+        <td>{{account.BillingCountry}}</td>
+        <td>
+          {{#link-to 'accounts.edit' account}}Edit{{/link-to}}
+        </td>
+        <td><a action="delete">Delete</a></td>
+      </tr>
+      {{else}}
+        Sorry, no Accounts here.
+    {{/each}}
+  </tbody>
+</table>
+
+{{outlet}}

@@ -1,0 +1,21 @@
+<div class="large-12 columns">
+  <h5>{{Name}}</h5>
+  <p>
+    <strong>Billing Address</strong>
+    <br> City {{input value=model.BillingCity}}
+    <br> State {{input value=model.BillingState}}
+    <br> Zip {{input value=model.BillingPostalCode}}
+    <br> Country {{input value=model.BillingCountry}}
+  </p>
+
+  <h5>Created By</h5>
+  <p>{{model.CreatedBy.Name}}</p>
+  <ul class="inline-list">
+    <li>
+      {{#link-to 'accounts'}}Back{{/link-to}}
+    </li>
+    <li><a action="delete">Delete</a></li>
+  </ul>
+</div>
+
+{{outlet}}

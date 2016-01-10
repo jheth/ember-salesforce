@@ -1,0 +1,9 @@
+<div class="row">
+  <label>First Name</label>
+  {{input type="text" value=model.FirstName}}
+</div>
+<div class="row">
+  <label>Last Name</label>
+  {{input type="text" value=model.LastName}}
+</div>
+<button {{action "save" model}}>Create</button>

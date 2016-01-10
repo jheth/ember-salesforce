@@ -43,5 +43,15 @@ module.exports = function(environment) {
 
   }
 
+  ENV.contentSecurityPolicy = {
+    'default-src': "'self'",
+    'script-src':  "'self'",
+    'font-src':    "'self'",
+    'connect-src': "'self' https://frozen-citadel-5038.herokuapp.com/",
+    'img-src':     "'self' http://placehold.it https://placeholdit.imgix.net",
+    'style-src':   "'self'",
+    'media-src':   "'self'"
+  }
+
   return ENV;
 };

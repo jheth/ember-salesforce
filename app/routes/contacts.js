@@ -11,9 +11,15 @@ export default Ember.Route.extend({
       });
     },
     delete: function(model) {
-      model.destroyRecord().then(() => {
-        this.transitionTo('contacts');
-      });
+      model.destroyRecord().then(
+        () => {
+          this.transitionTo('contacts');
+        },
+        (err) => {
+          this.toast.info(err.toString());
+          this.transitionTo('contacts');
+        }
+      );
     }
   }
 });

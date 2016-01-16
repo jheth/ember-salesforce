@@ -29,7 +29,7 @@ export default Ember.Route.extend({
         Object.keys(userInfo).forEach((key) => {
           var value = userInfo[key];
           this.set('session.' + key, value);
-        })
+        });
 
         this.transitionTo('accounts');
       });

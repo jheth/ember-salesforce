@@ -1,6 +1,5 @@
 import Ember from 'ember';
 import DS from 'ember-data';
-/* global jsforce  */
 
 /* injected service: sfconn */
 
@@ -21,16 +20,16 @@ export default DS.Adapter.extend(Ember.Evented, {
     @param {Object|String|Integer|null} id
    */
   findRecord: function(store, type, id, snapshot) {
-    console.log("find: ", type, id);
+    console.log("find", type, id);
     return new Ember.RSVP.Promise((resolve, reject) => {
       // Single record retrieval
       return this.sfconn.sobject(type.modelName.capitalize()).retrieve(id, function(err, data) {
         if (err) {
-          console.error(err);
+          console.log(err);
           reject(err);
         } else {
-          console.log("Id : " + data.Id);
-          console.log("Name : " + data.Name);
+          console.log("Id : ", data.Id);
+          console.log("Name : ", data.Name);
           // ...
           console.log(data);
           data.id = data.Id;
@@ -89,19 +88,22 @@ export default DS.Adapter.extend(Ember.Evented, {
 
     return new Ember.RSVP.Promise((resolve, reject) => {
 
-      var records = [];
       var soql = "SELECT " + fields.join(', ') + " FROM " + type.modelName.capitalize();
       console.log(soql);
       return this.sfconn.query(soql, function(err, result) {
-        if (err) { return console.error(err); }
+        if (err) {
+          console.log(err);
+          reject(result);
+          return;
+        }
 
-        console.log("total : " + result.totalSize);
-        console.log("fetched : " + result.records.length);
-        console.log("done ? : " + result.done);
+        console.log("total : ", result.totalSize);
+        console.log("fetched : ", result.records.length);
+        console.log("done ? : ", result.done);
         if (!result.done) {
           // you can use the locator to fetch next records set.
           // Connection#queryMore()
-          console.log("next records URL : " + result.nextRecordsUrl);
+          console.log("next records URL : ", result.nextRecordsUrl);
         }
 
         resolve(result.records);
@@ -121,12 +123,16 @@ export default DS.Adapter.extend(Ember.Evented, {
     return new Ember.RSVP.Promise((resolve, reject) => {
       // Single record creation
       this.sfconn.sobject(type.modelName).create(data, function(err, ret) {
-        if (err || !ret.success) { return console.error(err, ret); }
-        console.log("Created record id : " + ret.id);
-        // ...
-        if (ret.success === true) {
-          console.log('resolve', ret);
-          resolve(ret);
+        if (err || !ret.success) {
+          console.log(err, ret);
+          reject(ret);
+        } else {
+          console.log("Created record id : ", ret.id);
+          // ...
+          if (ret.success === true) {
+            console.log('resolve', ret);
+            resolve(ret);
+          }
         }
       });
     });
@@ -141,13 +147,15 @@ export default DS.Adapter.extend(Ember.Evented, {
     return new Ember.RSVP.Promise((resolve, reject) => {
       // Single record update
       this.sfconn.sobject(type.modelName).update(data, function(err, ret) {
-        if (err || !ret.success) { return console.error(err, ret); }
-        console.log('Updated Successfully : ' + ret.id);
-        if (ret.success === true && ret.errors.length === 0) {
-          resolve(ret);
+        if (err || !ret.success) {
+          console.log(err, ret);
+          reject(ret);
+        } else {
+          console.log('Updated Successfully : ', ret);
+          if (ret.success === true && ret.errors.length === 0) {
+            resolve(ret);
+          }
         }
-        // ...
-        console.log(ret);
       });
 
     });
@@ -155,16 +163,16 @@ export default DS.Adapter.extend(Ember.Evented, {
 
   deleteRecord: function (store, type, snapshot) {
     var id = snapshot.id;
-
-    console.log('Delete ' + type + ' ' + id);
+    console.log('Delete ', type, id);
 
     return new Ember.RSVP.Promise((resolve, reject) => {
       // Single record deletion
       return this.sfconn.sobject(type.modelName).destroy(id, function(err, ret) {
-        if (err || !ret.success) { return console.error(err, ret); }
-        console.log('Deleted Successfully : ' + ret.id);
-        if (ret.success === true) {
-          console.log('resolve', ret);
+        if (err || !ret.success) {
+          console.log(err, ret);
+          reject(err);
+        } else if (ret.success === true) {
+          console.log('Deleted Successfully : ', ret);
           resolve(ret);
         }
       });

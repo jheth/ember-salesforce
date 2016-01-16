@@ -1,8 +1,6 @@
 import { moduleForModel, test } from 'ember-qunit';
 
-import User from 'ember-salesforce/models/user';
-
-moduleForModel('lead', 'Unit', 'Unit | Model | lead', {
+moduleForModel('lead', 'Unit | Model | lead', {
   // Specify the other units that are required for this test.
   needs: ['model:user']
 });

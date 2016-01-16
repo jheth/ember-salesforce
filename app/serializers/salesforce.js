@@ -45,7 +45,7 @@ export default DS.JSONSerializer.extend(DS.EmbeddedRecordsMixin, {
     });
 
     /* Do not serialize relationships */
-    if (options.includeId) {
+    if (options && options.includeId) {
       json.Id = snapshot.id;
     }
 

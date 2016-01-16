@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-  beforeModel: function(transition) {
+  beforeModel: function() {
     this.sfconn._sessionType = 'soap';
 
     this.sfconn.logout().then((err) => {

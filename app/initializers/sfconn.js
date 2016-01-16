@@ -1,3 +1,5 @@
+/* global jsforce */
+
 export function initialize( container, application ) {
 
   var conn = new jsforce.Connection({

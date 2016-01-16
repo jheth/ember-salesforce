@@ -3,7 +3,7 @@ import Ember from 'ember';
 export default Ember.Route.extend({
   beforeModel: function(transition) {
 
-    if (!this.session.hasOwnProperty('id') && transition.targetName != 'login') {
+    if (!this.session.hasOwnProperty('id') && transition.targetName !== 'login') {
       /* Check for exisiting cookie */
       var tokenMatches = document.cookie.match(/accessToken\=([^;]*)/);
       var instanceMatches = document.cookie.match(/instanceUrl\=([^;]*)/);
@@ -19,7 +19,11 @@ export default Ember.Route.extend({
   model: function() {
     if (this.sfconn.accessToken && this.sfconn.instanceUrl) {
       return this.sfconn.identity((err, res) => {
-        if (err) { return console.error(err); }
+        if (err) {
+          console.log(err);
+          this.transitionTo('login');
+          return;
+        }
         console.log("user ID: " + res.user_id);
         console.log("organization ID: " + res.organization_id);
         console.log("username: " + res.username);
@@ -29,7 +33,7 @@ export default Ember.Route.extend({
         Object.keys(res).forEach((key) => {
           var value = res[key];
           this.set('session.' + key, value);
-        })
+        });
       });
     } else {
       console.log('sfconn not satisfied');
@@ -41,7 +45,7 @@ export default Ember.Route.extend({
       // Ember.onerror(error);
       this.toast.info(error.toString());
 
-      if (transition.targetName != 'login') {
+      if (transition.targetName !== 'login') {
         // this.transitionTo('login');
       }
 

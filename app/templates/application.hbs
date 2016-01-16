@@ -1,6 +1,6 @@
 <div class="container">
   <!-- Static navbar -->
-  <nav class="navbar navbar-default">
+  <nav class="navbar navbar-default" role="navigation">
     <div class="container-fluid">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -9,27 +9,38 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">EmberForce</a>
       </div>
-      <div id="navbar" class="navbar-collapse collapse">
-        <ul class="nav navbar-nav">
-          <li>
-            {{#link-to 'accounts'}}Accounts{{/link-to}}
-          </li>
-          <li>
-            {{#link-to 'leads'}}Leads{{/link-to}}
-          </li>
-          <li>
-            {{#link-to 'contacts'}}Contacts{{/link-to}}
-          </li>
-        </ul>
+      <a class="navbar-brand" href="#">EmberForce</a>
+      <div class="navbar-collapse collapse">
+        {{#if isAuthenticated }}
+          <ul class="nav navbar-nav navbar-left">
+            <li>
+              {{#link-to 'accounts'}}Accounts{{/link-to}}
+            </li>
+            <li>
+              {{#link-to 'leads'}}Leads{{/link-to}}
+            </li>
+            <li>
+              {{#link-to 'contacts'}}Contacts{{/link-to}}
+            </li>
+          </ul>
+        {{/if}}
         <ul class="nav navbar-nav navbar-right">
-          <li>
-            <img src= {{SmallPhotoUrl}} />
-          </li>
-          <li>
-            &nbsp;<a href="https://na15.salesforce.com/">{{Name}}</a>
-          </li>
+          {{#if isAuthenticated }}
+            <li>
+              <img src={{session.photos.thumbnail}} >
+            </li>
+            <li>
+              <a href="https://login.salesforce.com/">{{session.display_name}}</a>
+            </li>
+            <li>
+              {{#link-to 'logout'}}Logout{{/link-to}}
+            </li>
+          {{else}}
+            <li>
+              {{#link-to 'login'}}Login{{/link-to}}
+            </li>
+          {{/if}}
         </ul>
       </div>
       <!--/.nav-collapse -->
@@ -53,23 +64,25 @@
   </div>
 
   <!-- Footer -->
-  <footer class="footer">
+  <footer class="footer.clearfix">
     <div class="row">
       <div class="span3">
         <p>&copy; Copyright no one at all. Go to town.</p>
       </div>
       <div class="span3">
-        <ul class="nav navbar-nav navbar-right">
-          <li>
-            {{#link-to 'accounts'}}Accounts{{/link-to}}
-          </li>
-          <li>
-            {{#link-to 'leads'}}Leads{{/link-to}}
-          </li>
-          <li>
-            {{#link-to 'contacts'}}Contacts{{/link-to}}
-          </li>
-        </ul>
+        {{#if isAuthenticated }}
+          <ul class="nav navbar-nav navbar-right">
+            <li>
+              {{#link-to 'accounts'}}Accounts{{/link-to}}
+            </li>
+            <li>
+              {{#link-to 'leads'}}Leads{{/link-to}}
+            </li>
+            <li>
+              {{#link-to 'contacts'}}Contacts{{/link-to}}
+            </li>
+          </ul>
+        {{/if}}
       </div>
     </div>
   </footer>

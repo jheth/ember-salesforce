@@ -6,7 +6,9 @@ export default DS.JSONSerializer.extend(DS.EmbeddedRecordsMixin, {
     return false;
   },
   attrs: {
-    attributes: { serialize: false }
+    attributes: {
+      serialize: false
+    }
   },
   normalizeResponse: function(store, primaryModelClass, payload, id, requestType) {
     payload.Id = payload.id;
@@ -17,9 +19,8 @@ export default DS.JSONSerializer.extend(DS.EmbeddedRecordsMixin, {
       resourceHash.id = resourceHash.Id;
     }
 
-    var self = this;
-    modelClass.eachRelationship(function(key, relationshipMeta) {
-      var relationshipKey = self.keyForRelationship(key, relationshipMeta.kind, "deserialize");
+    modelClass.eachRelationship((key, relationshipMeta) => {
+      var relationshipKey = this.keyForRelationship(key, relationshipMeta.kind, "deserialize");
       if (resourceHash.hasOwnProperty(relationshipKey)) {
 
         var relationshipHash = resourceHash[relationshipKey];
@@ -35,5 +36,20 @@ export default DS.JSONSerializer.extend(DS.EmbeddedRecordsMixin, {
     });
 
     return this._super(modelClass, resourceHash);
+  },
+
+  serialize: function(snapshot, options) {
+    var json = {};
+    snapshot.eachAttribute(function(name) {
+      json[name] = snapshot.attr(name);
+    });
+
+    /* Do not serialize relationships */
+    if (options.includeId) {
+      json.Id = snapshot.id;
+    }
+
+    return json;
   }
+
 });

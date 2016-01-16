@@ -19,7 +19,8 @@ Router.map(function() {
     this.route('edit', { path: '/:id'});
     this.route('show', { path: "/:id/edit" });
   });
-  this.route('connection');
+  this.route('login');
+  this.route('logout');
 });
 
 export default Router;

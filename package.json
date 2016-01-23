@@ -40,5 +40,7 @@
     "ember-simple-auth": "1.0.1",
     "ember-toastr": "1.4.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "ember-force": "git://github.com/jheth/ember-force.git#bb7382d"
+  }
 }

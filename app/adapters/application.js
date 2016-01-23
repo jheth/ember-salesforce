@@ -1,3 +1,3 @@
-import SalesforceAdapter from 'ember-salesforce/adapters/salesforce';
+import SalesforceAdapter from 'ember-force/adapters/salesforce';
 
 export default SalesforceAdapter.extend();

@@ -1,4 +1,4 @@
-import SalesforceSerializer from 'ember-salesforce/serializers/salesforce';
+import SalesforceSerializer from 'ember-force/serializers/salesforce';
 
 export default SalesforceSerializer.extend({
   attrs: {

@@ -46,12 +46,13 @@ module.exports = function(environment) {
 
   }
 
+  //
   ENV.contentSecurityPolicy = {
     'default-src': "'self'",
     'script-src':  "'self'",
     'font-src':    "'self'",
-    'connect-src': "'self' *.salesforce.com " + (ENV.APP.jsforce) ? ENV.APP.jsforce.proxyUrl : '',
-    'img-src':     "'self' data: http://placehold.it https://placeholdit.imgix.net *.salesforce.com *.content.force.com",
+    'connect-src': "'self' *.salesforce.com " + (ENV.APP.jsforce && ENV.APP.jsforce.proxyUrl) ? ENV.APP.jsforce.proxyUrl : '',
+    'img-src':     "'self' data: http://placehold.it https://placeholdit.imgix.net *.salesforce.com *force.com",
     'style-src':   "'self'",
     'media-src':   "'self'"
   }

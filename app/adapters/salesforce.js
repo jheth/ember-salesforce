@@ -4,12 +4,8 @@ import DS from 'ember-data';
 /* injected service: sfconn */
 
 export default DS.Adapter.extend(Ember.Evented, {
-  defaultSerializer: 'salesforce',
-  coalesceFindRequests: false,
-
-  shouldReloadAll() {
-    return true;
-  },
+  defaultSerializer: '-salesforce',
+  coalesceFindRequests: true,
 
   /**
     This is the main entry point into finding records. The first parameter to

@@ -2,14 +2,14 @@ import DS from 'ember-data';
 
 export default DS.JSONSerializer.extend(DS.EmbeddedRecordsMixin, {
   primaryKey: 'Id',
-  isNewSerializerAPI: function() {
-    return false;
-  },
+  isNewSerializerAPI: true,
+
   attrs: {
     attributes: {
       serialize: false
     }
   },
+
   normalizeResponse: function(store, primaryModelClass, payload, id, requestType) {
     payload.Id = payload.id;
     return this._super(store, primaryModelClass, payload, id, requestType);
@@ -26,6 +26,7 @@ export default DS.JSONSerializer.extend(DS.EmbeddedRecordsMixin, {
         var relationshipHash = resourceHash[relationshipKey];
         if (relationshipMeta.kind === "hasMany") {
           /* Salesforce Relationship: {size: 3, done: true, records: []} */
+
           /* Need to assign records array into Hash */
           if (relationshipHash && relationshipHash.hasOwnProperty('records')) {
             /* Overwrite Hash with Array */

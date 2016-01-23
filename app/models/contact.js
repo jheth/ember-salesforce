@@ -6,5 +6,5 @@ export default DS.Model.extend({
   LastName: DS.attr('string'),
   Title: DS.attr('string'),
   Department: DS.attr('string'),
-  CreatedBy: DS.belongsTo('user')
+  CreatedBy: DS.belongsTo('user', { async: false })
 });

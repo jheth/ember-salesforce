@@ -16,7 +16,9 @@ module.exports = function(environment) {
     APP: {
       // Here you can pass flags/options to your application instance
       // when it is created
-      jsforceProxyUrl: 'https://frozen-citadel-5038.herokuapp.com/proxy/'
+      jsforce: {
+        proxyUrl: 'https://frozen-citadel-5038.herokuapp.com/proxy/'
+      }
     }
   };
 
@@ -48,7 +50,7 @@ module.exports = function(environment) {
     'default-src': "'self'",
     'script-src':  "'self'",
     'font-src':    "'self'",
-    'connect-src': "'self'" + " " + ENV.APP.jsforceProxyUrl,
+    'connect-src': "'self' *.salesforce.com " + (ENV.APP.jsforce) ? ENV.APP.jsforce.proxyUrl : '',
     'img-src':     "'self' data: http://placehold.it https://placeholdit.imgix.net *.salesforce.com *.content.force.com",
     'style-src':   "'self'",
     'media-src':   "'self'"

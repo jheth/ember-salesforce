@@ -2,11 +2,8 @@
 
 export function initialize( container, application ) {
 
-  var conn = new jsforce.Connection({
-    // you can change loginUrl to connect to sandbox or prerelease env.
-    // loginUrl : 'https://test.salesforce.com'
-    proxyUrl: application.jsforceProxyUrl
-  });
+  var forceConfig = application.jsforce || {};
+  var conn = new jsforce.Connection(forceConfig);
 
   application.register('service:sfconn', conn, { instantiate: false });
 
